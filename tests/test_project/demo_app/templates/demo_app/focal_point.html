@@ -1,0 +1,11 @@
+{% load wagtailimages_tags %}
+
+{% if img %}
+  {% image img fill-300x300 %}
+  {% image img fill-400x800 %}
+  {% image img fill-400x300 %}
+  {% image img fill-800x600 %}
+  {% image img fill-1600x600 %}
+{% else %}
+  <p>No images uploaded.</p>
+{% endif %}

@@ -29,6 +29,23 @@ classifiers = [
   "Topic :: Internet :: WWW/HTTP :: Site Management",
 ]
 
+[project.optional-dependencies]
+test = [
+  "Pillow",
+  "pytest",
+  "pytest-django",
+]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "tests.test_project.settings"
+pythonpath = [
+  "src",
+  ".",
+]
+testpaths = [
+  "tests",
+]
+
 [project.urls]
 Documentation = "https://github.com/allcaps/wagtail-exact-crop/"
 Changelog = "https://github.com/allcaps/wagtail-exact-crop/blob/main/CHANGELOG.md"

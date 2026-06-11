@@ -25,7 +25,18 @@ from wagtail_exact_crop.models import ExactCropImageMixin
 
 
 class CustomImage(ExactCropImageMixin, AbstractImage):
-    admin_form_fields = AbstractImage.admin_form_fields + ("exact_crops",)
+    admin_form_fields = (
+        "title",
+        "file",
+        "description",
+        "collection",
+        "tags",
+        "focal_point_x",
+        "focal_point_y",
+        "focal_point_width",
+        "focal_point_height",
+        "exact_crops",
+    )
 
 
 class CustomRendition(AbstractRendition):
@@ -96,3 +107,31 @@ Just use the `exact-` prefix followed by the crop preset name to apply the crop:
 {% image some_image exact-list_image_medium %}
 {% image some_image exact-hero_image %}
 ```
+
+## Testing
+
+Install the package with test dependencies:
+
+```shell
+python -m venv .venv
+source .venv/bin/activate
+pip install -e ".[test]"
+```
+
+Run the automated tests:
+
+```shell
+pytest
+```
+
+## Manual test project
+
+The `tests/test_project` Django/Wagtail project can be used to test the admin UI manually:
+
+```shell
+python tests/test_project/manage.py migrate
+python tests/test_project/manage.py createsuperuser
+python tests/test_project/manage.py runserver
+```
+
+Then open `http://127.0.0.1:8000/admin/`, upload an image, edit it, adjust the exact crop widgets, and save. The exact crop demo at `http://127.0.0.1:8000/exact-crop/` renders the latest uploaded image using the documented `exact-*` filters. The focal point comparison page at `http://127.0.0.1:8000/focal-point/` renders the same target sizes with Wagtail's `fill-*` filters.
