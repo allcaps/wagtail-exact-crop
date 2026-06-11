@@ -1,49 +1,8 @@
-from django import forms
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
-from django.core.exceptions import PermissionDenied
-from django.urls import path
 
 from wagtail import hooks
-from wagtail.admin.views.generic import EditView
-from wagtail.images import get_image_model
 from wagtail.images.image_operations import FilterOperation
-from wagtail.images.permissions import permission_policy
-
-
-class CropView(EditView):
-    pk_url_kwarg = "image_id"
-    template_name = "exactcrop/edit.html"
-    model = get_image_model()
-    index_url_name = "wagtailimages:index"
-    edit_url_name = "crop"
-    header_icon = "image"
-
-    def get_form_class(self):
-        return forms.modelform_factory(
-            get_image_model(),
-            fields=("exact_crops",),
-        )
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["image"] = self.object
-        return context
-
-    def get_object(self, queryset=None):
-        obj = super().get_object(queryset)
-        if not permission_policy.user_has_permission_for_instance(
-            self.request.user, "change", obj
-        ):
-            raise PermissionDenied
-        return obj
-
-
-@hooks.register("register_admin_urls")
-def register_admin_urls():
-    return [
-        path("images/<int:image_id>/crop/", CropView.as_view(), name="crop"),
-    ]
 
 
 class ExactCropOperation(FilterOperation):
