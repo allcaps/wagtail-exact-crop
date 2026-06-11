@@ -4,7 +4,9 @@ Exact image cropping for Wagtail.
 
 ## Installation
 
-Assuming you have a Wagtail project set up.
+```shell
+pip install wagtail-exact-crop
+```
 
 Add `wagtail_exact_crop` to installed apps:
 
@@ -35,7 +37,7 @@ class CustomImage(ExactCropImageMixin, AbstractImage):
         "focal_point_y",
         "focal_point_width",
         "focal_point_height",
-        "exact_crops",
+        "exact_crops",  # !
     )
 
 
@@ -50,12 +52,14 @@ class CustomRendition(AbstractRendition):
         unique_together = (("image", "filter_spec", "focal_point_key"),)
 ```
 
+Define the custom image model in your settings:
+
 ```python
 # settings.py
 WAGTAILIMAGES_IMAGE_MODEL = "images.CustomImage"
 ```
 
-After adding the model, create and run migrations for your image app.
+After adding the model, run `makemigrations` and `migrate`.
 
 Define crop sizes:
 
@@ -69,7 +73,7 @@ WAGTAIL_EXACT_IMAGE_CROP_PRESETS = {
 }
 ```
 
-Define widgets (admin interface). Note that images with the same aspect ratio can share presets:
+Define widgets (admin interface). Note that images with the same aspect ratio might share widget:
 
 ```python
 WAGTAIL_EXACT_IMAGE_CROP_WIDGETS = {
@@ -96,7 +100,7 @@ WAGTAIL_EXACT_IMAGE_CROP_WIDGETS = {
 }
 ```
 
-Exact crop is registered as a custom image filter, so you can use it in your templates like any other filter.
+Exact crop is registered as a custom image filter, so you can use it in your templates like any other image filter.
 https://docs.wagtail.org/en/latest/extending/custom_image_filters.html
 
 Just use the `exact-` prefix followed by the crop preset name to apply the crop:
@@ -111,12 +115,12 @@ Just use the `exact-` prefix followed by the crop preset name to apply the crop:
 {% image some_image exact-hero_image %}
 ```
 
-## Testing
+## Development and testing
 
 Install the package with test dependencies:
 
 ```shell
-python -m venv .venv
+uv venv
 source .venv/bin/activate
 pip install -e ".[test]"
 ```
@@ -127,9 +131,9 @@ Run the automated tests:
 pytest
 ```
 
-## Manual test project
+## Demo project
 
-The `tests/test_project` Django/Wagtail project can be used to test the admin UI manually:
+The `tests/test_project` Django/Wagtail project can be used for manual testing and demonstration.
 
 ```shell
 python tests/test_project/manage.py migrate
@@ -137,7 +141,9 @@ python tests/test_project/manage.py createsuperuser
 python tests/test_project/manage.py runserver
 ```
 
-Then open `http://127.0.0.1:8000/admin/`, upload an image, edit it, adjust the exact crop widgets, and save. The exact crop demo at `http://127.0.0.1:8000/exact-crop/` renders the latest uploaded image using the documented `exact-*` filters. The focal point comparison page at `http://127.0.0.1:8000/focal-point/` renders the same target sizes with Wagtail's `fill-*` filters.
+Then open `http://127.0.0.1:8000/admin/`, upload an image, edit it, adjust the exact crop widgets, and save.
+The exact crop demo at `http://127.0.0.1:8000/exact-crop/` renders the latest uploaded image using the documented `exact-*` filters.
+The focal point comparison page at `http://127.0.0.1:8000/focal-point/` renders the same target sizes with Wagtail's `fill-*` filters.
 
 ## Releasing
 
