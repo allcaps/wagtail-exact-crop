@@ -5,6 +5,7 @@ import modelsearch.index
 import taggit.managers
 import wagtail.images.models
 import wagtail.models.media
+import wagtail_exact_crop.models
 from django.conf import settings
 from django.db import migrations, models
 
@@ -36,7 +37,7 @@ class Migration(migrations.Migration):
                 ('focal_point_height', models.PositiveIntegerField(blank=True, null=True)),
                 ('file_size', models.PositiveIntegerField(editable=False, null=True)),
                 ('file_hash', models.CharField(blank=True, db_index=True, editable=False, max_length=40)),
-                ('exact_crops', models.JSONField(blank=True, default=dict)),
+                ('exact_crops', wagtail_exact_crop.models.ExactCropsField(blank=True, default=dict)),
                 ('collection', models.ForeignKey(default=wagtail.models.media.get_root_collection_id, on_delete=django.db.models.deletion.CASCADE, related_name='+', to='wagtailcore.collection', verbose_name='collection')),
                 ('tags', taggit.managers.TaggableManager(blank=True, help_text=None, through='taggit.TaggedItem', to='taggit.Tag', verbose_name='tags')),
                 ('uploaded_by_user', models.ForeignKey(blank=True, editable=False, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL, verbose_name='uploaded by user')),

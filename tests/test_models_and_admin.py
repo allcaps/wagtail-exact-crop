@@ -77,6 +77,8 @@ def test_admin_image_edit_template_renders_for_superuser(client, django_user_mod
     assert response.status_code == 200
     assert b"exactcrop/main.js" in response.content
     assert b"exactcrop/styles.css" in response.content
+    assert b'type="hidden" name="exact_crops"' in response.content
+    assert b'<textarea name="exact_crops"' not in response.content
 
 
 @pytest.mark.django_db
