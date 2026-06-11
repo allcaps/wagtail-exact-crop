@@ -135,3 +135,33 @@ python tests/test_project/manage.py runserver
 ```
 
 Then open `http://127.0.0.1:8000/admin/`, upload an image, edit it, adjust the exact crop widgets, and save. The exact crop demo at `http://127.0.0.1:8000/exact-crop/` renders the latest uploaded image using the documented `exact-*` filters. The focal point comparison page at `http://127.0.0.1:8000/focal-point/` renders the same target sizes with Wagtail's `fill-*` filters.
+
+## Releasing
+
+Releases are published to PyPI by GitHub Actions when a `v*` tag is pushed.
+
+```shell
+uv version 0.1.1
+git add pyproject.toml
+git commit -m "Release 0.1.1"
+git tag -a v0.1.1 -m v0.1.1
+git push
+git push origin v0.1.1
+```
+
+The Git tag should be the package version with a `v` prefix. For example, `version = "0.1.1"` in `pyproject.toml` is released with tag `v0.1.1`.
+
+You can also create the GitHub Release in the web UI after pushing the tag. If you create the tag through the GitHub Release UI, make sure the version bump commit is already on the target branch.
+
+To build and inspect the package locally:
+
+```shell
+uv build
+```
+
+This writes the release artifacts to `dist/`. Before publishing, inspect the generated files and verify the package data is included:
+
+```shell
+tar -tf dist/wagtail_exact_crop-*.tar.gz
+unzip -l dist/wagtail_exact_crop-*.whl
+```

@@ -1,0 +1,45 @@
+name: Publish to PyPI
+
+on:
+  push:
+    tags:
+      - "v*"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: pypi
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Set up Python 3.14
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+
+      - name: Run Django checks
+        run: uv run --extra test python tests/test_project/manage.py check
+
+      - name: Check test project migrations
+        run: uv run --extra test python tests/test_project/manage.py makemigrations --check --dry-run
+
+      - name: Run pytest
+        run: uv run --extra test pytest -q
+
+      - name: Build package
+        run: uv build --no-sources
+
+      - name: Publish package
+        run: uv publish
