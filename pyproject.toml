@@ -1,0 +1,40 @@
+[project]
+name = "wagtail-exact-crop"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Coen van der Kamp", email = "coen@fourdigits.nl" }
+]
+requires-python = ">=3.10"
+dependencies = [
+  "wagtail",
+]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Environment :: Web Environment",
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Framework :: Django",
+  "Framework :: Django :: 5.2",
+  "Framework :: Django :: 6.0",
+  "Framework :: Wagtail",
+  "Topic :: Internet :: WWW/HTTP :: Site Management",
+]
+
+[project.urls]
+Documentation = "https://github.com/allcaps/wagtail-exact-crop/"
+Changelog = "https://github.com/allcaps/wagtail-exact-crop/blob/main/CHANGELOG.md"
+Issues = "https://github.com/allcaps/wagtail-exact-crop/issues"
+Source = "https://github.com/allcaps/wagtail-exact-crop"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

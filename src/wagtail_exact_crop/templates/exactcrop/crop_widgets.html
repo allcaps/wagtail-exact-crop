@@ -1,0 +1,24 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'exactcrop/styles.css' %}">
+
+{% load i18n %}
+
+{% for widget in widgets %}
+  <div class="exact-crop-widget"
+       data-presets="{{ widget.presets_str }}"
+       data-image-url="{{ widget.image_url }}"
+       data-width="{{ widget.width }}"
+       data-height="{{ widget.height }}">
+
+    <h3 class="exact-crop-title">{{ widget.title }}</h3>
+
+    {% if widget.description %}
+      <p class="exact-crop-description">{{ widget.description }}</p>
+    {% endif %}
+  </div>
+{% endfor %}
+
+<script type="module" src="{% static 'exactcrop/main.js' %}"></script>
+
+{#{{ presets }}#}

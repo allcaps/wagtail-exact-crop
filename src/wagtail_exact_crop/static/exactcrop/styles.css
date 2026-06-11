@@ -1,0 +1,16 @@
+/* Exact Crop Widget Styles - Minimal for debugging */
+
+.exact-crop-widget {
+  margin-bottom: 20px;
+}
+
+.exact-crop-title {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.exact-crop-description {
+  margin: 0 0 15px 0;
+  font-size: 14px;
+}
