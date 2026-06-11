@@ -1,11 +1,16 @@
+{% extends "demo_app/base.html" %}
 {% load wagtailimages_tags %}
 
-{% if img %}
-  {% image img exact-avatar %}
-  {% image img exact-medium_shot %}
-  {% image img exact-list_image_small %}
-  {% image img exact-list_image_medium %}
-  {% image img exact-hero_image %}
-{% else %}
-  <p>No images uploaded.</p>
-{% endif %}
+{% block title %}Exact crop demo{% endblock %}
+
+{% block content %}
+  {% if img %}
+    {% image img exact-avatar %}
+    {% image img exact-medium_shot %}
+    {% image img exact-list_image_small %}
+    {% image img exact-list_image_medium %}
+    {% image img exact-hero_image %}
+  {% else %}
+    <p>No images uploaded.</p>
+  {% endif %}
+{% endblock %}
