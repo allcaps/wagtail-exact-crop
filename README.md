@@ -17,10 +17,9 @@ INSTALLED_APPS = [
 ]
 ```
 
-Configure a custom image model with the `exact_crops` field:
+Use the `ExactCropImageMixin` to add the `exact_crops` field to your custom image model:
 
 ```python
-# images/models.py
 from django.db import models
 from wagtail.images.models import AbstractImage, AbstractRendition
 from wagtail_exact_crop.models import ExactCropImageMixin
@@ -55,7 +54,6 @@ class CustomRendition(AbstractRendition):
 Define the custom image model in your settings:
 
 ```python
-# settings.py
 WAGTAILIMAGES_IMAGE_MODEL = "images.CustomImage"
 ```
 
