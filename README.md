@@ -45,6 +45,9 @@ class CustomRendition(AbstractRendition):
         on_delete=models.CASCADE,
         related_name="renditions",
     )
+
+    class Meta:
+        unique_together = (("image", "filter_spec", "focal_point_key"),)
 ```
 
 ```python
@@ -71,23 +74,23 @@ Define widgets (admin interface). Note that images with the same aspect ratio ca
 ```python
 WAGTAIL_EXACT_IMAGE_CROP_WIDGETS = {
     "avatar": {
-        "title": _("Avatar image"),
-        "description": _("Used in listings and teasers"),
+        "title": "Avatar image",
+        "description": "Used in listings and teasers",
         "presets": ["avatar"],
     },
     "medium_shot": {
-        "title": _("Medium shot image"),
-        "description": _("Used in listings and teasers"),
+        "title": "Medium shot image",
+        "description": "Used in listings and teasers",
         "presets": ["medium_shot"],
     },
     "list_image": {
-        "title": _("List image"),
-        "description": _("Used in listings and teasers"),
+        "title": "List image",
+        "description": "Used in listings and teasers",
         "presets": ["list_image_small", "list_image_medium"],
     },
     "hero_image": {
-        "title": _("Hero image"),
-        "description": _("Large banner at top of page"),
+        "title": "Hero image",
+        "description": "Large banner at top of page",
         "presets": ["hero_image"],
     },
 }
