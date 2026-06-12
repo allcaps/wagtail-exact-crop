@@ -2,6 +2,7 @@ from io import BytesIO
 
 import pytest
 from django.core.files.base import ContentFile
+from django.test import override_settings
 from django.template.loader import render_to_string
 from django.urls import reverse
 from PIL import Image
@@ -79,6 +80,37 @@ def test_admin_image_edit_template_renders_for_superuser(client, django_user_mod
     assert b"exactcrop/styles.css" in response.content
     assert b'type="hidden" name="exact_crops"' in response.content
     assert b'<textarea name="exact_crops"' not in response.content
+    assert b'class="focal-point-chooser"' in response.content
+    assert b"show-transparency" in response.content
+    assert b"focal-point-chooser.js" not in response.content
+    assert b"jquery.Jcrop.min.js" not in response.content
+    assert b"data-focal-point-x" not in response.content
+    assert b"current-focal-point-indicator" not in response.content
+    assert b"remove-focal-point" not in response.content
+    assert b'name="focal_point_x"' in response.content
+    assert b'name="focal_point_y"' in response.content
+    assert b'name="focal_point_width"' in response.content
+    assert b'name="focal_point_height"' in response.content
+
+
+@pytest.mark.django_db
+@override_settings(WAGTAIL_EXACT_IMAGE_CROP_FOCAL_POINT_ENABLED=True)
+def test_admin_image_edit_template_can_enable_focal_point(client, django_user_model, test_image):
+    user = django_user_model.objects.create_superuser(
+        username="admin",
+        email="admin@example.com",
+        password="password",
+    )
+    client.force_login(user)
+
+    response = client.get(reverse("wagtailimages:edit", args=[test_image.pk]))
+
+    assert response.status_code == 200
+    assert b"focal-point-chooser.js" in response.content
+    assert b"jquery.Jcrop.min.js" in response.content
+    assert b"data-focal-point-x" in response.content
+    assert b"current-focal-point-indicator" in response.content
+    assert b"remove-focal-point" in response.content
 
 
 @pytest.mark.django_db
