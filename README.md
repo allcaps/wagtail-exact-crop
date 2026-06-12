@@ -1,6 +1,9 @@
 # Wagtail Exact Crop
 
-Exact image cropping for Wagtail.
+Exact image cropping for Wagtail content editors.
+
+Give content editors precise control over image crops in the Wagtail image admin.
+Instead of relying on focal points, editors move and scale the image inside fixed crop areas and see the result immediately.
 
 ## Installation
 

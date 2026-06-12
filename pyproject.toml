@@ -1,7 +1,9 @@
 [project]
 name = "wagtail-exact-crop"
 version = "0.1.0"
-description = "Add your description here"
+description = "Exact image cropping for Wagtail content editors"
+license = "BSD-3-Clause"
+keywords = ["wagtail", "image", "crop"]
 readme = "README.md"
 authors = [
     { name = "Coen van der Kamp", email = "coen@fourdigits.nl" }
