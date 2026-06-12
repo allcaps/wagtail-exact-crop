@@ -2,8 +2,6 @@
 
 <link rel="stylesheet" href="{% static 'exactcrop/styles.css' %}">
 
-{% load i18n %}
-
 {% for widget in widgets %}
   <div class="exact-crop-widget"
        data-presets="{{ widget.presets_str }}"

@@ -14,3 +14,19 @@
   margin: 0 0 15px 0;
   font-size: 14px;
 }
+
+.exact-crop-widget .button {
+  margin-inline-end: 0.5rem;
+}
+
+.exact-crop-widget.is-locked .cropper {
+  cursor: default;
+}
+
+.exact-crop-widget.is-unlocked .cropper {
+  cursor: grab;
+}
+
+.exact-crop-widget.is-unlocked .cropper:active {
+  cursor: grabbing;
+}

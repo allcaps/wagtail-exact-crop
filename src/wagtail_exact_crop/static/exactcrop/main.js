@@ -4,6 +4,7 @@ class ExactCropWidget {
     this.imgUrl = root.dataset.imageUrl;
     this.cropWidth = parseInt(root.dataset.width, 10);
     this.cropHeight = parseInt(root.dataset.height, 10);
+    this.locked = true;
     
     // Calculate container scale factor for responsive scaling
     this.containerScale = this.calculateContainerScale();
@@ -45,12 +46,20 @@ class ExactCropWidget {
     const controlsContainer = document.createElement("div");
     controlsContainer.style = "padding: 1rem 0;";
     this.root.appendChild(controlsContainer);
+
+    this.lockToggleBtn = this.createButton("Edit crop", () => {
+      this.setLocked(!this.locked);
+    });
+    this.lockToggleBtn.className = "button button-secondary";
+    this.lockToggleBtn.setAttribute("aria-pressed", "false");
+    controlsContainer.appendChild(this.lockToggleBtn);
     
     this.fitBtn = this.createButton("Fit to crop", () => this.fitToCrop());
     this.fitBtn.className = "button button-secondary yes"
     controlsContainer.appendChild(this.fitBtn);
     
     this.overlayToggleBtn = this.createButton("Toggle guides", () => {
+      if (this.locked) return;
       this.overlayEnabled = !this.overlayEnabled;
       this.drawOverlay();
     });
@@ -68,6 +77,7 @@ class ExactCropWidget {
     this.zoomSlider.style.display = "block";
     this.zoomSlider.style.width = "100%";
     this.zoomSlider.addEventListener("input", () => {
+      if (this.locked) return;
       this.scale = parseFloat(this.zoomSlider.value);
       this.updateTransform();
     });
@@ -104,6 +114,7 @@ class ExactCropWidget {
 
     this.initDrag();
     this.drawOverlay();
+    this.setLocked(true);
     
     // Handle window resize for responsive scaling
     window.addEventListener("resize", () => {
@@ -138,6 +149,22 @@ class ExactCropWidget {
     btn.innerText = label;
     btn.addEventListener("click", onClick);
     return btn;
+  }
+
+  setLocked(locked) {
+    this.locked = locked;
+    this.root.classList.toggle("is-locked", locked);
+    this.root.classList.toggle("is-unlocked", !locked);
+    this.lockToggleBtn.innerText = locked ? "Edit crop" : "Done";
+    this.lockToggleBtn.setAttribute("aria-pressed", String(!locked));
+    this.fitBtn.disabled = locked;
+    this.overlayToggleBtn.disabled = locked;
+    this.resetBtn.disabled = locked;
+    this.zoomSlider.disabled = locked;
+    if (locked) {
+      this.overlayEnabled = false;
+      this.drawOverlay();
+    }
   }
 
   fitToCrop() {
@@ -190,6 +217,7 @@ class ExactCropWidget {
     let lastX, lastY;
 
     this.container.addEventListener("mousedown", e => {
+      if (this.locked) return;
       dragging = true;
       lastX = e.clientX;
       lastY = e.clientY;
@@ -209,6 +237,7 @@ class ExactCropWidget {
     window.addEventListener("mouseup", () => dragging = false);
 
     this.container.addEventListener("wheel", e => {
+      if (this.locked) return;
       e.preventDefault();
       const oldScale = this.scale;
       const zoomFactor = 0.05;
