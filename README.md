@@ -101,6 +101,16 @@ WAGTAIL_EXACT_IMAGE_CROP_WIDGETS = {
 }
 ```
 
+Wagtail Exact Crop disables Wagtail's focal point editor by default.
+To use focal point and exact crops side by side, enable it explicitly:
+
+```python
+WAGTAIL_EXACT_IMAGE_CROP_FOCAL_POINT_ENABLED = True
+```
+
+This setting only controls the focal point editor in the Wagtail admin.
+Existing focal point data is preserved either way and will still be submitted with the image form.
+
 Exact crop is registered as a custom image filter, so you can use it in your templates like any other image filter.
 https://docs.wagtail.org/en/latest/extending/custom_image_filters.html
 

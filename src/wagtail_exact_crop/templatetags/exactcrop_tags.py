@@ -5,6 +5,11 @@ from django.core.exceptions import ImproperlyConfigured
 register = template.Library()
 
 
+@register.simple_tag
+def exact_crop_focal_point_enabled():
+    return getattr(settings, "WAGTAIL_EXACT_IMAGE_CROP_FOCAL_POINT_ENABLED", False)
+
+
 @register.inclusion_tag("exactcrop/crop_widgets.html", takes_context=True)
 def exact_crop_widgets(context):
     """
