@@ -1,6 +1,6 @@
 [project]
 name = "wagtail-exact-crop"
-version = "0.1.1"
+version = "0.2.0"
 description = "Exact image cropping for Wagtail content editors"
 license = "BSD-3-Clause"
 keywords = ["wagtail", "image", "crop"]
