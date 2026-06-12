@@ -150,8 +150,9 @@ The focal point comparison page at `http://127.0.0.1:8000/focal-point/` renders 
 
 Releases are published to PyPI by GitHub Actions when a `v*` tag is pushed.
 
+Update the project version in `pyproject.toml`.
+
 ```shell
-uv version 0.1.1
 git add pyproject.toml
 git commit -m "Release 0.1.1"
 git tag -a v0.1.1 -m v0.1.1
